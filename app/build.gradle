@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.comleoneo.myrestaurant"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Flex Box
+    implementation 'com.google.android:flexbox:1.1.0'
+
+    // Facebook Account Kit
+    implementation 'com.facebook.android:account-kit-sdk:5.+'
+
+    // Butter Knife`
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    // Dexter
+    implementation 'com.karumi:dexter:5.0.0'
+
+    // Retrofit + Rxjava
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+
+    // Spots Dialog
+    implementation 'com.github.d-max:spots-dialog:1.1@aar'
+
+    // Slider
+    implementation 'com.ss.bannerslider:bannerslider:2.0.0'
+
+    // Event Bus
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    // Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // Notification Badge
+    implementation 'com.nex3z:notification-badge:1.0.2'
+
+    // Room + Rxjava
+    implementation 'androidx.room:room-runtime:2.1.0'
+    implementation 'androidx.room:room-rxjava2:2.1.0'
+    annotationProcessor 'androidx.room:room-compiler:2.1.0'
+    implementation 'com.nex3z:notification-badge:1.0.2'
+
+    // Expandable layout
+    implementation 'com.github.florent37:expansionpanel:1.2.2'
+
+    // Date Calendar
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.1'
+
+    // Braintree
+    implementation 'com.braintreepayments.api:drop-in:4.2.0'
+
+}

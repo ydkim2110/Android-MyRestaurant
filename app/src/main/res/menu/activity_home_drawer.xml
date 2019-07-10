@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group>
+        <item
+            android:id="@+id/nav_nearby"
+            android:icon="@drawable/ic_restaurant_gray_24dp"
+            android:title="@string/nearby_restaurant" />\
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_fav"
+            android:icon="@drawable/ic_favorite_gray_24dp"
+            android:title="@string/menu_fav" />\
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_order_history"
+            android:icon="@drawable/ic_history_gray_24dp"
+            android:title="@string/order_history" />\
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_update_info"
+            android:icon="@drawable/ic_account_circle_gray_24dp"
+            android:title="@string/update_info" />\
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_exit_to_app_gray_24dp"
+            android:title="@string/sign_out" />\
+    </group>
+</menu>
