@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.comleoneo.myrestaurant.Model.EventBust.MenuItemEvent;
 import com.comleoneo.myrestaurant.Retrofit.IMyRestaurantAPI;
 import com.comleoneo.myrestaurant.Retrofit.RetrofitClient;
 import com.comleoneo.myrestaurant.Utils.SpaceItemDecoration;
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nex3z.notificationbadge.NotificationBadge;
 import com.squareup.picasso.Picasso;
@@ -45,7 +48,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = MenuActivity.class.getSimpleName();
 
     @BindView(R.id.img_restaurant)
-    ImageView img_restaurant;
+    KenBurnsView img_restaurant;
     @BindView(R.id.recycler_category)
     RecyclerView recycler_category;
     @BindView(R.id.toolbar)
@@ -61,6 +64,8 @@ public class MenuActivity extends AppCompatActivity {
 
     private MyCategoryAdapter mAdapter;
     private CartDataSource mCartDataSource;
+
+    private LayoutAnimationController mLayoutAnimationController;
 
     @Override
     protected void onDestroy() {
@@ -153,6 +158,8 @@ public class MenuActivity extends AppCompatActivity {
         Log.d(TAG, "initView: called!!");
         ButterKnife.bind(this);
 
+        mLayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_left);
+
         btn_cart.setOnClickListener(v -> {
             startActivity(new Intent(MenuActivity.this, CartListActivity.class));
         });
@@ -225,6 +232,7 @@ public class MenuActivity extends AppCompatActivity {
 
                         mAdapter = new MyCategoryAdapter(MenuActivity.this, menuModel.getResult());
                         recycler_category.setAdapter(mAdapter);
+                        recycler_category.setLayoutAnimation(mLayoutAnimationController);
 
                     }, throwable -> {
                         Toast.makeText(this, "[GET CATEGORY]"+throwable.getMessage(), Toast.LENGTH_SHORT).show();

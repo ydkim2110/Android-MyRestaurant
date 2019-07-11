@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -38,7 +39,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -168,6 +173,28 @@ public class PlaceOrderActivity extends AppCompatActivity implements DatePickerD
                 Toast.makeText(this, "Please select Date", Toast.LENGTH_SHORT).show();
                 return;
             }
+            else {
+                String dateString = edt_date.getText().toString();
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                try {
+                    Date orderDate = df.parse(dateString);
+
+                    // Get current date
+                    Calendar calendar = Calendar.getInstance();
+
+                    Date currentDate = df.parse(df.format(calendar.getTime()));
+
+                    if (!DateUtils.isToday(orderDate.getTime())) {
+                        if (orderDate.before(currentDate)) {
+                            Toast.makeText(this, "Please choose current date or future day", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
 
             if (!isAddNewAddress) {
                 if (!chb_default_address.isChecked()) {
@@ -251,9 +278,10 @@ public class PlaceOrderActivity extends AppCompatActivity implements DatePickerD
 
                                                     if (mDialog.isShowing())
                                                         mDialog.dismiss();
+
                                                 }, throwable -> {
                                                     mDialog.show();
-                                                    Toast.makeText(this, "[UPDATE ORDER]", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(this, "[UPDATE ORDER]"+throwable.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }));
                                     } else {
                                         mDialog.dismiss();

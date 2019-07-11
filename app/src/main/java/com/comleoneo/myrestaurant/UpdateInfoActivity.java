@@ -3,6 +3,7 @@ package com.comleoneo.myrestaurant;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -139,6 +140,11 @@ public class UpdateInfoActivity extends AppCompatActivity {
                 });
             }
         });
+
+        if (Common.currentUser != null && !TextUtils.isEmpty(Common.currentUser.getName()))
+            edt_user_name.setText(Common.currentUser.getName());
+        if (Common.currentUser != null && !TextUtils.isEmpty(Common.currentUser.getAddress()))
+            edt_user_address.setText(Common.currentUser.getAddress());
     }
 
     private void init() {

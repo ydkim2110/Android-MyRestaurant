@@ -5,6 +5,7 @@ import com.comleoneo.myrestaurant.Model.CreateOrderModel;
 import com.comleoneo.myrestaurant.Model.FavoriteModel;
 import com.comleoneo.myrestaurant.Model.FavoriteOnlyIdModel;
 import com.comleoneo.myrestaurant.Model.FoodModel;
+import com.comleoneo.myrestaurant.Model.MaxOrderModel;
 import com.comleoneo.myrestaurant.Model.MenuModel;
 import com.comleoneo.myrestaurant.Model.OrderModel;
 import com.comleoneo.myrestaurant.Model.RestaurantModel;
@@ -29,6 +30,16 @@ public interface IMyRestaurantAPI {
 
     @GET("restaurant")
     Observable<RestaurantModel> getRestaurant(@Query("key") String apiKey);
+
+    @GET("restaurantById")
+    Observable<RestaurantModel> getRestaurantById(@Query("key") String apiKey,
+                                                  @Query("restaurantId") String id);
+
+    @GET("nearbyrestaurant")
+    Observable<RestaurantModel> getNearbyRestaurant(@Query("key") String apiKey,
+                                                    @Query("lat") Double lat,
+                                                    @Query("lng") Double lng,
+                                                    @Query("distance") int distance);
 
     @GET("menu")
     Observable<MenuModel> getCategories(@Query("key") String apiKey,
@@ -67,8 +78,13 @@ public interface IMyRestaurantAPI {
 
     @GET("order")
     Observable<OrderModel> getOrder(@Query("key") String apiKey,
-                                    @Query("orderFBID") String orderFBID);
+                                    @Query("orderFBID") String orderFBID,
+                                    @Query("from") int from,
+                                    @Query("to") int to);
 
+    @GET("maxorder")
+    Observable<MaxOrderModel> getMaxOrder(@Query("key") String apiKey,
+                                          @Query("orderFBID") String orderFBID);
 
     // POST
     @POST("user")

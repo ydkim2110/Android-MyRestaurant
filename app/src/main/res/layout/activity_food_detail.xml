@@ -32,7 +32,7 @@
 
             </com.google.android.material.appbar.AppBarLayout>
 
-            <ImageView
+            <com.flaviofaria.kenburnsview.KenBurnsView
                 android:id="@+id/img_food_detail"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"

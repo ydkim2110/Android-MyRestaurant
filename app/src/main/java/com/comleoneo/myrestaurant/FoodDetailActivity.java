@@ -1,6 +1,7 @@
 package com.comleoneo.myrestaurant;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import com.comleoneo.myrestaurant.Model.Food;
 import com.comleoneo.myrestaurant.Model.Size;
 import com.comleoneo.myrestaurant.Retrofit.IMyRestaurantAPI;
 import com.comleoneo.myrestaurant.Retrofit.RetrofitClient;
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -65,7 +67,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     @BindView(R.id.txt_description)
     TextView txt_description;
     @BindView(R.id.img_food_detail)
-    ImageView img_food_detail;
+    KenBurnsView img_food_detail;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -118,6 +120,10 @@ public class FoodDetailActivity extends AppCompatActivity {
                     }, throwable -> {
                         Toast.makeText(this, "[ADD CART]"+throwable.getMessage(), Toast.LENGTH_SHORT).show();
                     }));
+        });
+
+        btn_view_cart.setOnClickListener(v -> {
+            startActivity(new Intent(FoodDetailActivity.this, CartListActivity.class));
         });
     }
 
@@ -236,11 +242,8 @@ public class FoodDetailActivity extends AppCompatActivity {
             for (Size size : event.getSizeList()) {
                 RadioButton radioButton = new RadioButton(this);
                 radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                    if (isChecked) {
+                    if (isChecked)
                         sizePrice = size.getExtraPrice();
-                    } else {
-                        sizePrice = -size.getExtraPrice();
-                    }
 
                     calculatePrice();
                     sizeSelected = size.getDescription();

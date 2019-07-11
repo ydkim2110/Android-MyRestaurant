@@ -30,7 +30,7 @@
             
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ImageView
+        <com.flaviofaria.kenburnsview.KenBurnsView
             android:id="@+id/img_restaurant"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"

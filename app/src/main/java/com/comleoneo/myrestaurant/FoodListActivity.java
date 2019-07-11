@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.comleoneo.myrestaurant.Model.Category;
 import com.comleoneo.myrestaurant.Model.EventBust.FoodListEvent;
 import com.comleoneo.myrestaurant.Retrofit.IMyRestaurantAPI;
 import com.comleoneo.myrestaurant.Retrofit.RetrofitClient;
+import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +48,7 @@ public class FoodListActivity extends AppCompatActivity {
     private android.app.AlertDialog mDialog;
 
     @BindView(R.id.img_category)
-    ImageView img_category;
+    KenBurnsView img_category;
     @BindView(R.id.recycler_food_list)
     RecyclerView recycler_food_list;
     @BindView(R.id.toolbar)
@@ -54,6 +57,8 @@ public class FoodListActivity extends AppCompatActivity {
     private MyFoodAdapter adapter;
     private MyFoodAdapter searchAdapter;
     private Category selectedCategory;
+
+    private LayoutAnimationController mLayoutAnimationController;
 
     @Override
     protected void onDestroy() {
@@ -130,6 +135,7 @@ public class FoodListActivity extends AppCompatActivity {
                     if (foodModel.isSuccess()) {
                         searchAdapter = new MyFoodAdapter(FoodListActivity.this, foodModel.getResult());
                         recycler_food_list.setAdapter(searchAdapter);
+                        recycler_food_list.setLayoutAnimation(mLayoutAnimationController);
                     } else {
                         if (foodModel.getMessage().contains("Empty")) {
                             recycler_food_list.setAdapter(null);
@@ -159,6 +165,8 @@ public class FoodListActivity extends AppCompatActivity {
     private void initView() {
         Log.d(TAG, "initView: called!!");
         ButterKnife.bind(this);
+
+        mLayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_left);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recycler_food_list.setLayoutManager(layoutManager);
@@ -212,6 +220,7 @@ public class FoodListActivity extends AppCompatActivity {
                         if (foodModel.isSuccess()) {
                             adapter = new MyFoodAdapter(this, foodModel.getResult());
                             recycler_food_list.setAdapter(adapter);
+                            recycler_food_list.setLayoutAnimation(mLayoutAnimationController);
                         } else {
                             Toast.makeText(this, "[GET FOOD RESULT]" + foodModel.getMessage(), Toast.LENGTH_SHORT).show();
                         }

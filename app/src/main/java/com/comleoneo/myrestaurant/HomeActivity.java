@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +62,8 @@ public class HomeActivity extends AppCompatActivity
     private IMyRestaurantAPI mIMyRestaurantAPI;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private android.app.AlertDialog mDialog;
+
+    private LayoutAnimationController mLayoutAnimationController;
 
     @Override
     protected void onDestroy() {
@@ -123,6 +127,8 @@ public class HomeActivity extends AppCompatActivity
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recycler_restaurant.setLayoutManager(layoutManager);
         recycler_restaurant.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+
+        mLayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_left);
     }
 
     private void init() {
@@ -175,11 +181,11 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_log_out) {
             signOut();
         } else if (id == R.id.nav_nearby) {
-
+            startActivity(new Intent(HomeActivity.this, NearbyRestaurantActivity.class));
         } else if (id == R.id.nav_order_history) {
             startActivity(new Intent(HomeActivity.this, ViewOrderActivity.class));
         } else if (id == R.id.nav_update_info) {
-
+            startActivity(new Intent(HomeActivity.this, UpdateInfoActivity.class));
         } else if (id == R.id.nav_fav) {
             startActivity(new Intent(HomeActivity.this, FavoriteActivity.class));
         }
@@ -245,6 +251,7 @@ public class HomeActivity extends AppCompatActivity
         Log.d(TAG, "displayRestaurant: called!!");
         MyRestaurantAdapter adapter = new MyRestaurantAdapter(this, restaurantList);
         recycler_restaurant.setAdapter(adapter);
+        recycler_restaurant.setLayoutAnimation(mLayoutAnimationController);
     }
 
     private void displayBanner(List<Restaurant> restaurantList) {

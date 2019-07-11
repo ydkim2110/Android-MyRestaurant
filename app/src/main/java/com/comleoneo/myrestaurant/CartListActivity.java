@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,8 @@ public class CartListActivity extends AppCompatActivity {
 
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private CartDataSource mCartDataSource;
+
+    private LayoutAnimationController mLayoutAnimationController;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -99,6 +103,7 @@ public class CartListActivity extends AppCompatActivity {
 
                         MyCartAdapter adapter = new MyCartAdapter(CartListActivity.this, cartItems);
                         recycler_cart.setAdapter(adapter);
+                        recycler_cart.setLayoutAnimation(mLayoutAnimationController);
                         
                         calculateCartTotalPrice();
                     }
@@ -150,6 +155,8 @@ public class CartListActivity extends AppCompatActivity {
     private void initView() {
         Log.d(TAG, "initView: called!!");
         ButterKnife.bind(this);
+
+        mLayoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_item_from_left);
 
         toolbar.setTitle(getString(R.string.cart));
         setSupportActionBar(toolbar);
