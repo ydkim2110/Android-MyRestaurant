@@ -10,6 +10,7 @@ import com.comleoneo.myrestaurant.Model.MenuModel;
 import com.comleoneo.myrestaurant.Model.OrderModel;
 import com.comleoneo.myrestaurant.Model.RestaurantModel;
 import com.comleoneo.myrestaurant.Model.SizeModel;
+import com.comleoneo.myrestaurant.Model.TokenModel;
 import com.comleoneo.myrestaurant.Model.UpdateOrderModel;
 import com.comleoneo.myrestaurant.Model.UpdateUserModel;
 import com.comleoneo.myrestaurant.Model.UserModel;
@@ -86,6 +87,10 @@ public interface IMyRestaurantAPI {
     Observable<MaxOrderModel> getMaxOrder(@Query("key") String apiKey,
                                           @Query("orderFBID") String orderFBID);
 
+    @GET("token")
+    Observable<TokenModel> getToken(@Query("key") String apiKey,
+                                    @Query("fbid") String fbid);
+
     // POST
     @POST("user")
     @FormUrlEncoded
@@ -106,6 +111,11 @@ public interface IMyRestaurantAPI {
                                              @Field("foodImage") String foodImage,
                                              @Field("price") double price);
 
+    @POST("token")
+    @FormUrlEncoded
+    Observable<TokenModel> updateTokenToServer(@Field("key") String key,
+                                       @Field("fbid") String fbid,
+                                       @Field("token") String token);
 
     @POST("createOrder")
     @FormUrlEncoded
