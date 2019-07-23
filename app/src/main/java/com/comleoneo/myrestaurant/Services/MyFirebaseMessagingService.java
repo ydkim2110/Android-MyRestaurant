@@ -8,6 +8,9 @@ import com.comleoneo.myrestaurant.Retrofit.RetrofitClient;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+import java.util.Random;
+
 import io.paperdb.Paper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -61,5 +64,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
+
+        // Get notification object from FCM
+        // Because we want to retrieve notification while app killed, so we must use Data payload
+        Map<String, String> dataRecv = remoteMessage.getData();
+        if (dataRecv != null) {
+            Common.showNotification(this,
+                    new Random().nextInt(),
+                    dataRecv.get(Common.NOTIFIC_TITLE),
+                    dataRecv.get(Common.NOTIFIC_CONTENT),
+                    null);
+        }
     }
 }
